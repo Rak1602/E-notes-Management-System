@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Welcome, {{ current_user.username }}!</h2>
+    <a href="{{ url_for('upload') }}" class="upload-page-btn">Upload a New Note</a>
+    <ul class="notes-list">
+        {% for note in notes %}
+            <li>
+                {{ note.title }} - 
+                <a href="{{ url_for('view_note', note_id=note.id) }}" class="view-note-btn">View</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>{{ note.title }}</h2>
+
+    <!-- Note preview will be rendered here -->
+    <div class="note-preview">
+        {% if note.filename.endswith('.jpg') or note.filename.endswith('.jpeg') or note.filename.endswith('.png') %}
+            <!-- Display Image -->
+            <img src="{{ url_for('static', filename='uploads/' + note.filename) }}" alt="Note Image" class="preview-img">
+        {% elif note.filename.endswith('.pdf') %}
+            <!-- Display PDF -->
+            <iframe src="{{ url_for('static', filename='uploads/' + note.filename) }}" width="100%" height="100%" class="preview-pdf"></iframe>
+        {% elif note.filename.endswith('.txt') %}
+            <!-- Display Text File -->
+            <pre>{{ note.content }}</pre>
+        {% else %}
+            <!-- Default Preview for Unsupported Files -->
+            <p>Preview is not available for this file type.</p>
+        {% endif %}
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <!-- Download button -->
+        <a href="{{ url_for('static', filename='uploads/' + note.filename) }}" download>
+            <button class="download-btn">Download</button>
+        </a>
+
+        <!-- Back to search button -->
+        <a href="{{ url_for('search', q=request.args.get('q')) }}">
+            <button class="back-btn">Back to Search</button>
+        </a>
+    </div>
+</div>
+{% endblock %}

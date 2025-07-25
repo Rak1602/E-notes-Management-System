@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Search Results for "{{ query }}"</h2>
+{% if results %}
+  {% for note in results %}
+  <div class="card">
+    <h3>{{ note.title }}</h3>
+    <p>Category: {{ note.category }}</p>
+    <a href="{{ url_for('static', filename=note.filename) }}" target="_blank">View Note</a>
+  </div>
+  {% endfor %}
+{% else %}
+  <div class="card">
+    <p>No results found.</p>
+  </div>
+{% endif %}
+{% endblock %}
